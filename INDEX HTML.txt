@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tanveer Store</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            color: #222;
+        }
+
+        header {
+            background: #111;
+            color: white;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        header h1 {
+            color: #ff9800;
+        }
+
+        #cartButton {
+            background: #ff9800;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .hero {
+            text-align: center;
+            padding: 70px 20px;
+            background: linear-gradient(135deg, #222, #555);
+            color: white;
+        }
+
+        .hero h2 {
+            font-size: 40px;
+            margin-bottom: 15px;
+        }
+
+        .hero p {
+            font-size: 18px;
+        }
+
+        .search {
+            text-align: center;
+            padding: 25px;
+        }
+
+        .search input {
+            width: 80%;
+            max-width: 500px;
+            padding: 14px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        .products {
+            padding: 30px 7%;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        .product {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            padding-bottom: 20px;
+            text-align: center;
+        }
+
+        .product img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .product h3 {
+            margin: 15px 0 8px;
+        }
+
+        .price {
+            color: #e67e00;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 12px;
+        }
+
+        .product button {
+            background: #111;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .product button:hover {
+            background: #ff9800;
+        }
+
+        #cart {
+            display: none;
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 350px;
+            height: 100%;
+            background: white;
+            box-shadow: -3px 0 10px rgba(0,0,0,0.2);
+            padding: 25px;
+            z-index: 20;
+            overflow-y: auto;
+        }
+
+        #cart h2 {
+            margin-bottom: 20px;
+        }
+
+        .cart-item {
+            border-bottom: 1px solid #ddd;
+            padding: 12px 0;
+        }
+
+        .cart-item button {
+            margin: 5px;
+            padding: 5px 9px;
+            cursor: pointer;
+        }
+
+        #closeCart {
+            float: right;
+            background: red;
+            color: white;
+            border: none;
+            padding: 7px 10px;
+            cursor: pointer;
+        }
+
+        .checkout {
+            margin-top: 20px;
+        }
+
+        .checkout input {
+            width: 100%;
+            padding: 12px;
+            margin: 7px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #orderButton {
+            width: 100%;
+            padding: 13px;
+            background: green;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        footer {
+            background: #111;
+            color: white;
+            text-align: center;
+            padding: 25px;
+            margin-top: 30px;
+        }
+
+        @media(max-width: 600px) {
+            #cart {
+                width: 100%;
+            }
+
+            .hero h2 {
+                font-size: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>Tanveer Store</h1>
+    <button id="cartButton" onclick="openCart()">
+        🛒 Cart (<span id="cartCount">0</span>)
+    </button>
+</header>
+
+<section class="hero">
+    <h2>Welcome to Tanveer Store</h2>
+    <p>Quality products at affordable prices</p>
+</section>
+
+<div class="search">
+    <input
+        type="text"
+        id="searchBox"
+        placeholder="Search products..."
+        onkeyup="searchProducts()"
+    >
+</div>
+
+<section class="products" id="productList">
+
+    <div class="product" data-name="T Shirt">
+        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab" alt="T Shirt">
+        <h3>T Shirt</h3>
+        <p class="price">Rs. 1,500</p>
+        <button onclick="addToCart('T Shirt', 1500)">
+            Add to Cart
+        </button>
+    </div>
+
+    <div class="product" data-name="Shoes">
+        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff" alt="Shoes">
+        <h3>Sports Shoes</h3>
+        <p class="price">Rs. 4,000</p>
+        <button onclick="addToCart('Sports Shoes', 4000)">
+            Add to Cart
+        </button>
+    </div>
+
+    <div class="product" data-name="Watch">
+        <img src="https://images.unsplash.com/photo-1524805444758-089113d48a6d" alt="Watch">
+        <h3>Wrist Watch</h3>
+        <p class="price">Rs. 2,500</p>
+        <button onclick="addToCart('Wrist Watch', 2500)">
+            Add to Cart
+        </button>
+    </div>
+
+    <div class="product" data-name="Bag">
+        <img src="https://images.unsplash.com/photo-1553062407-98eeb64c6a62" alt="Bag">
+        <h3>Travel Bag</h3>
+        <p class="price">Rs. 3,000</p>
+        <button onclick="addToCart('Travel Bag', 3000)">
+            Add to Cart
+        </button>
+    </div>
+
+</section>
+
+<div id="cart">
+
+    <button id="closeCart" onclick="closeCart()">X</button>
+
+    <h2>Your Cart</h2>
+
+    <div id="cartItems"></div>
+
+    <h3>Total: Rs. <span id="total">0</span></h3>
+
+    <div class="checkout">
+
+        <h3>Customer Information</h3>
+
+        <input type="text" id="customerName" placeholder="Your Name">
+
+        <input type="text" id="phone" placeholder="Phone Number">
+
+        <input type="text" id="address" placeholder="Delivery Address">
+
+        <button id="orderButton" onclick="placeOrder()">
+            Place Order
+        </button>
+
+    </div>
+
+</div>
+
+<footer>
+    <p>© 2026 Tanveer Store. All Rights Reserved.</p>
+</footer>
+
+<script>
+
+    let cart = [];
+
+    function addToCart(name, price) {
+
+        let existing = cart.find(item => item.name === name);
+
+        if (existing) {
+            existing.quantity++;
+        } else {
+            cart.push({
+                name: name,
+                price: price,
+                quantity: 1
+            });
+        }
+
+        updateCart();
+
+        alert(name + " added to cart!");
+    }
+
+    function updateCart() {
+
+        let cartItems = document.getElementById("cartItems");
+
+        cartItems.innerHTML = "";
+
+        let total = 0;
+        let count = 0;
+
+        cart.forEach((item, index) => {
+
+            total += item.price * item.quantity;
+            count += item.quantity;
+
+            cartItems.innerHTML += `
+                <div class="cart-item">
+
+                    <strong>${item.name}</strong>
+
+                    <p>Rs. ${item.price}</p>
+
+                    <button onclick="decrease(${index})">−</button>
+
+                    ${item.quantity}
+
+                    <button onclick="increase(${index})">+</button>
+
+                    <button onclick="removeItem(${index})">
+                        Remove
+                    </button>
+
+                </div>
+            `;
+        });
+
+        document.getElementById("total").innerText = total;
+        document.getElementById("cartCount").innerText = count;
+    }
+
+    function increase(index) {
+        cart[index].quantity++;
+        updateCart();
+    }
+
+    function decrease(index) {
+
+        if (cart[index].quantity > 1) {
+            cart[index].quantity--;
+        } else {
+            cart.splice(index, 1);
+        }
+
+        updateCart();
+    }
+
+    function removeItem(index) {
+        cart.splice(index, 1);
+        updateCart();
+    }
+
+    function openCart() {
+        document.getElementById("cart").style.display = "block";
+    }
+
+    function closeCart() {
+        document.getElementById("cart").style.display = "none";
+    }
+
+    function searchProducts() {
+
+        let search =
+            document.getElementById("searchBox").value.toLowerCase();
+
+        let products =
+            document.querySelectorAll(".product");
+
+        products.forEach(product => {
+
+            let name =
+                product.dataset.name.toLowerCase();
+
+            if (name.includes(search)) {
+                product.style.display = "block";
+            } else {
+                product.style.display = "none";
+            }
+
+        });
+    }
+
+    function placeOrder() {
+
+        let name =
+            document.getElementById("customerName").value;
+
+        let phone =
+            document.getElementById("phone").value;
+
+        let address =
+            document.getElementById("address").value;
+
+        if (cart.length === 0) {
+            alert("Your cart is empty!");
+            return;
+        }
+
+        if (name === "" || phone === "" || address === "") {
+            alert("Please fill all customer information.");
+            return;
+        }
+
+        alert(
+            "Thank you " + name +
+            "! Your order has been placed."
+        );
+
+        cart = [];
+
+        updateCart();
+
+        document.getElementById("customerName").value = "";
+        document.getElementById("phone").value = "";
+        document.getElementById("address").value = "";
+
+        closeCart();
+    }
+
+</script>
+
+</body>
+</html>
