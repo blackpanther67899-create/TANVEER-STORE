@@ -1,24 +1,100 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>TANVEER STORE - Pro</title><style>body{margin:0;font-family:Arial;background:#f5f5f5}header{background:#000;color:#fff;padding:12px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10}header h1{color:#ffcc00;margin:0;font-size:20px}.nav-right{display:flex;gap:10px}.nav-right button{padding:8px 12px;border-radius:20px;border:none;font-weight:bold;cursor:pointer}.login-btn{background:#fff}.cart-btn{background:#ffcc00;position:relative}#cartCount{background:red;color:#fff;border-radius:50%;padding:2px 6px;position:absolute;top:-8px;right:-8px;font-size:11px}.search-area{background:#fff;padding:15px;display:flex;justify-content:center;gap:10px}.search-area input{width:60%;max-width:400px;padding:12px;border-radius:25px;border:1px solid #ccc}.filters{text-align:center;padding:10px}.filters button{margin:4px;padding:8px 15px;border-radius:20px;border:1px solid #000;background:#fff;cursor:pointer}.filters button.active{background:#000;color:#ffcc00}.products{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:15px;padding:20px}.card{background:#fff;border-radius:15px;padding:12px;text-align:center;box-shadow:0 2px 8px #0001}.card img{width:100%;height:190px;object-fit:cover;border-radius:10px}.price{font-weight:bold;margin:5px}.desc{font-size:12px;color:#666;height:30px;overflow:hidden}.card-actions{display:flex;gap:6px;margin-top:8px}.card-actions button{flex:1;padding:8px;border:none;border-radius:20px;font-weight:bold;cursor:pointer}.add-cart{background:#eee}.buy-now{background:#000;color:#ffcc00}.admin-area{text-align:center;padding:20px;background:#fff;margin:20px;border:2px dashed #ffcc00}.admin-area button{padding:12px 20px;background:#000;color:#ffcc00;border:none;border-radius:25px;font-weight:bold;cursor:pointer}.modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:#0008;z-index:100;justify-content:center;align-items:center}.modal-content{background:#fff;padding:20px;border-radius:15px;width:90%;max-width:400px}input,select,textarea{width:100%;padding:10px;margin:6px 0;border-radius:8px;border:1px solid #ccc;box-sizing:border-box}</style></head><body>
-<header><h1>TANVEER STORE</h1><div class="nav-right"><button class="login-btn" onclick="openLogin()">Login</button><button class="cart-btn" onclick="openCart()">Cart <span id="cartCount">0</span></button></div></header>
-<div class="search-area"><input id="searchInput" placeholder="Search Watch, Shoes..." onkeyup="searchProduct()"></div>
-<div class="filters"><button class="active" onclick="filterProduct('all',this)">All</button><button onclick="filterProduct('tshirt',this)">T-Shirts</button><button onclick="filterProduct('shoes',this)">Shoes</button><button onclick="filterProduct('watch',this)">Watches</button></div>
-<div class="products" id="productList"></div>
-<div class="admin-area"><h3>Owner Panel</h3><p>Yahan se naya product add karo</p><button onclick="openAddProduct()">+ ADD NEW PRODUCT</button></div>
-<div id="cartModal" class="modal" onclick="if(event.target==this)this.style.display='none'"><div class="modal-content"><h3>Cart</h3><div id="cartItems"></div><h4 id="cartTotal"></h4><button style="width:100%;padding:12px;background:#25D366;color:#fff;border:none;border-radius:20px;font-weight:bold" onclick="checkout()">WhatsApp Order</button><button style="width:100%;margin-top:8px;padding:10px" onclick="document.getElementById('cartModal').style.display='none'">Close</button></div></div>
-<div id="addModal" class="modal" onclick="if(event.target==this)this.style.display='none'"><div class="modal-content"><h3>Add Product</h3><input id="pName" placeholder="Product Name e.g. Black Watch"><input id="pPrice" placeholder="Price e.g. 3500" type="number"><select id="pCat"><option value="watch">Watch</option><option value="shoes">Shoes</option><option value="tshirt">T-Shirt</option><option value="wallet">Wallet</option></select><input id="pImg" placeholder="Image Link - khali chhoro to auto image lagegi"><textarea id="pDesc" placeholder="Description"></textarea><input id="adminPass" type="password" placeholder="Admin Password (tanveer123)"><button style="width:100%;padding:12px;background:#000;color:#ffcc00;border:none;border-radius:20px;margin-top:10px" onclick="saveNewProduct()">Add Product</button></div></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TANVEER STORE - Premium Watches & Gadgets</title>
+<style>
+body{margin:0;font-family:Arial;background:#000;color:#fff}
+header{background:#111;text-align:center;padding:25px;border-bottom:3px solid gold}
+header h1{color:gold;font-size:38px;margin:0;letter-spacing:2px}
+header p{color:#ccc;margin:5px}
+.container{padding:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
+.card{background:#111;border:1px solid #333;border-radius:15px;padding:15px;text-align:center}
+.card img{width:100%;height:220px;object-fit:contain;background:#000;border-radius:10px}
+.card h3{color:gold;margin:10px 0 5px}
+.price{color:#0f0;font-size:20px;font-weight:bold;margin:8px}
+.btn{background:gold;color:#000;padding:12px 20px;border:none;border-radius:25px;font-weight:bold;cursor:pointer;width:100%;font-size:16px}
+.btn:hover{background:#fff}
+#ownerPanel{background:#111;margin:30px 15px;padding:20px;border:2px dashed gold;border-radius:15px;text-align:center}
+input{padding:10px;margin:5px;width:85%;border-radius:8px;border:none}
+.qr-section{text-align:center;background:#0a0a0a;padding:35px;border-top:3px solid gold;margin-top:30px}
+footer{text-align:center;padding:15px;background:#111;color:gray;font-size:14px}
+</style>
+</head>
+<body>
+
+<header>
+<h1>TANVEER STORE</h1>
+<p>Premium Watches & Smart Gadgets | Karachi Pakistan</p>
+<p style="color:gold">Visit: https://shorturl.at/meQIj</p>
+</header>
+
+<div class="container" id="productList">
+<!-- Products will load here -->
+</div>
+
+<!-- OWNER PANEL -->
+<div id="ownerPanel">
+<h2 style="color:gold;">Owner Panel - ADD NEW PRODUCT</h2>
+<input id="pName" placeholder="Product Name e.g. Black Watch">
+<input id="pPrice" placeholder="Price e.g. 3500" type="number">
+<input id="pImg" placeholder="Image Link (optional)">
+<input id="pPass" placeholder="Password" type="password">
+<br><br>
+<button class="btn" onclick="addProduct()">Add Product</button>
+<p style="font-size:12px;color:gray;">Password: tanveer123</p>
+</div>
+
+<!-- QR CODE SECTION -->
+<div class="qr-section">
+<h2 style="color:gold;">📱 Scan & Visit Our Store</h2>
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://shorturl.at/meQIj" 
+style="border:6px solid gold;border-radius:20px;background:white;padding:5px;">
+<p style="font-size:20px;margin-top:15px;">Visit Now: <b style="color:gold;">https://shorturl.at/meQIj</b></p>
+<p style="color:#aaa;">Fast Delivery • Original Products • 1 Year Warranty</p>
+</div>
+
+<footer>© 2026 TANVEER STORE - All Rights Reserved</footer>
+
 <script>
-let defaultProducts=[{name:"Premium T-Shirt",price:1500,cat:"tshirt",desc:"100% Cotton Best Quality",img:"https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400"},{name:"Stylish Shoes",price:3500,cat:"shoes",desc:"Comfortable durable",img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400"},{name:"Smart Watch",price:4500,cat:"watch",desc:"Bluetooth Calling 2025",img:"https://images.unsplash.com/photo-1524805444973-bf35a6a58f3b?w=400"}];
-let products=JSON.parse(localStorage.getItem('tanveer_products')||'null')||defaultProducts;let cart=[];
-function displayProducts(){let list=document.getElementById('productList');list.innerHTML='';products.forEach((p,i)=>{list.innerHTML+=`<div class=card data-cat=${p.cat} data-name=${p.name}><img src=${p.img}><h3>${p.name}</h3><p class=desc>${p.desc}</p><div class=price>Rs. ${p.price}</div><div class=card-actions><button class=add-cart onclick="addToCart('${p.name}',${p.price})">Add to Cart</button><button class=buy-now onclick="buyNow('${p.name}',${p.price})">Buy Now</button></div></div>`});}
-displayProducts();
-function searchProduct(){let q=document.getElementById('searchInput').value.toLowerCase();document.querySelectorAll('.card').forEach(c=>{c.style.display=c.dataset.name.toLowerCase().includes(q)?'block':'none'})}
-function filterProduct(cat,el){document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));if(el)el.classList.add('active');document.querySelectorAll('.card').forEach(c=>{if(cat=='all'||c.dataset.cat==cat)c.style.display='block';else c.style.display='none'})}
-function addToCart(n,p){cart.push({name:n,price:p});document.getElementById('cartCount').innerText=cart.length;renderCart()}
-function buyNow(n,p){window.open(`https://wa.me/923164033509?text=Salam! Mujhe ${n} Rs.${p} chahiye`,'_blank')}
-function renderCart(){let d=document.getElementById('cartItems');let t=0;if(cart.length==0){d.innerHTML='Khali';document.getElementById('cartTotal').innerText='';return}d.innerHTML='';cart.forEach(it=>{t+=it.price;d.innerHTML+=`<div style="display:flex;justify-content:space-between"><span>${it.name}</span><span>${it.price}</span></div>`});document.getElementById('cartTotal').innerText='Total Rs.'+t}
-function openCart(){renderCart();document.getElementById('cartModal').style.display='flex'}
-function checkout(){if(!cart.length)return alert('Khali');let txt='Order:%0A';let tot=0;cart.forEach(i=>{txt+=`${i.name} Rs.${i.price}%0A`;tot+=i.price});txt+=`Total Rs.${tot}`;window.open('https://wa.me/923164033509?text='+txt,'_blank')}
-function openAddProduct(){document.getElementById('addModal').style.display='flex'}
-function saveNewProduct(){if(document.getElementById('adminPass').value!='tanveer123')return alert('Wrong password! Password is tanveer123');let n=document.getElementById('pName').value;let pr=parseInt(document.getElementById('pPrice').value);let c=document.getElementById('pCat').value;let im=document.getElementById('pImg').value||'https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=400';let de=document.getElementById('pDesc').value;if(!n||!pr)return alert('Name Price likho');products.push({name:n,price:pr,cat:c,img:im,desc:de});localStorage.setItem('tanveer_products',JSON.stringify(products));displayProducts();document.getElementById('addModal').style.display='none';alert('Product Add ho gaya!')}
-function openLogin(){let nm=prompt('Apna Naam likho:');if(nm)localStorage.setItem('custName',nm)}
-</script></body></html>
+let defaultProducts=[
+{name:"Golden Luxury Watch",price:5500,img:"https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=500"},
+{name:"Black Smart Watch",price:3500,img:"https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=500"},
+{name:"Silver Chain Watch",price:4000,img:"https://images.unsplash.com/photo-1548169874-53e85f753f1e?w=500"}
+];
+let products=JSON.parse(localStorage.getItem("tanveer_products")) || JSON.stringify(defaultProducts);
+
+function showProducts(){
+let list=document.getElementById("productList");
+list.innerHTML="";
+products.forEach((p,i)=>{
+let msg=`Hello Tanveer Store, I want to order: ${p.name} Price: Rs.${p.price} Link: https://shorturl.at/meQIj`;
+let waLink=`https://wa.me/923001234567?text=${encodeURIComponent(msg)}`;
+list.innerHTML+=`
+<div class="card">
+<img src="${p.img}">
+<h3>${p.name}</h3>
+<div class="price">Rs. ${p.price}</div>
+<a href="${waLink}" target="_blank"><button class="btn">Order on WhatsApp</button></a>
+</div>`;
+});
+}
+function addProduct(){
+let pass=document.getElementById("pPass").value;
+if(pass!=="tanveer123"){alert("Wrong Password!");return;}
+let name=document.getElementById("pName").value;
+let price=document.getElementById("pPrice").value;
+let img=document.getElementById("pImg").value;
+if(!name||!price){alert("Name & Price likho");return;}
+if(!img) img="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=500";
+products.push({name,price,img});
+localStorage.setItem("tanveer_products",JSON.stringify(products));
+showProducts();
+alert("Product Added Successfully!");
+document.getElementById("pName").value="";document.getElementById("pPrice").value="";document.getElementById("pImg").value="";
+}
+showProducts();
+</script>
+</body>
+</html>
