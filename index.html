@@ -1,100 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TANVEER STORE - Premium Watches & Gadgets</title>
+<title>TANVEER STORE</title>
 <style>
 body{margin:0;font-family:Arial;background:#000;color:#fff}
 header{background:#111;text-align:center;padding:25px;border-bottom:3px solid gold}
-header h1{color:gold;font-size:38px;margin:0;letter-spacing:2px}
-header p{color:#ccc;margin:5px}
+header h1{color:gold;margin:0;font-size:36px}
 .container{padding:20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px}
-.card{background:#111;border:1px solid #333;border-radius:15px;padding:15px;text-align:center}
-.card img{width:100%;height:220px;object-fit:contain;background:#000;border-radius:10px}
-.card h3{color:gold;margin:10px 0 5px}
-.price{color:#0f0;font-size:20px;font-weight:bold;margin:8px}
-.btn{background:gold;color:#000;padding:12px 20px;border:none;border-radius:25px;font-weight:bold;cursor:pointer;width:100%;font-size:16px}
-.btn:hover{background:#fff}
-#ownerPanel{background:#111;margin:30px 15px;padding:20px;border:2px dashed gold;border-radius:15px;text-align:center}
-input{padding:10px;margin:5px;width:85%;border-radius:8px;border:none}
-.qr-section{text-align:center;background:#0a0a0a;padding:35px;border-top:3px solid gold;margin-top:30px}
-footer{text-align:center;padding:15px;background:#111;color:gray;font-size:14px}
+.card{background:#111;border:1px solid #444;border-radius:15px;padding:15px;text-align:center}
+.card img{width:100%;height:220px;object-fit:cover;border-radius:10px;background:#222}
+.price{color:#0f0;font-size:22px;margin:10px;font-weight:bold}
+.btn{background:gold;color:#000;padding:12px;border:none;border-radius:25px;font-weight:bold;cursor:pointer;width:100%}
+.qr{text-align:center;background:#0a0a0a;padding:35px;border-top:3px solid gold;margin-top:20px}
+.owner{text-align:center;padding:20px;border:2px dashed gold;margin:20px;border-radius:15px;background:#111}
+input{padding:12px;margin:6px;width:80%;border-radius:8px;border:none}
 </style>
 </head>
 <body>
+<header><h1>TANVEER STORE</h1><p>Premium Watches & Smart Gadgets | Karachi Pakistan</p><p style="color:gold">Visit: https://shorturl.at/meQIj</p></header>
 
-<header>
-<h1>TANVEER STORE</h1>
-<p>Premium Watches & Smart Gadgets | Karachi Pakistan</p>
-<p style="color:gold">Visit: https://shorturl.at/meQIj</p>
-</header>
+<div class="container" id="list"></div>
 
-<div class="container" id="productList">
-<!-- Products will load here -->
-</div>
-
-<!-- OWNER PANEL -->
-<div id="ownerPanel">
+<div class="owner">
 <h2 style="color:gold;">Owner Panel - ADD NEW PRODUCT</h2>
-<input id="pName" placeholder="Product Name e.g. Black Watch">
-<input id="pPrice" placeholder="Price e.g. 3500" type="number">
-<input id="pImg" placeholder="Image Link (optional)">
-<input id="pPass" placeholder="Password" type="password">
-<br><br>
-<button class="btn" onclick="addProduct()">Add Product</button>
-<p style="font-size:12px;color:gray;">Password: tanveer123</p>
+<input id="n" placeholder="Product Name e.g. Black Watch"><br>
+<input id="pr" placeholder="Price e.g. 3500" type="number"><br>
+<input id="im" placeholder="Image Link (optional)"><br>
+<input id="ps" placeholder="Password" type="password"><br>
+<button class="btn" style="width:200px;margin-top:10px;" onclick="addP()">Add Product</button>
+<p style="color:gray;font-size:12px;margin-top:10px;">Password: tanveer123</p>
 </div>
 
-<!-- QR CODE SECTION -->
-<div class="qr-section">
+<div class="qr">
 <h2 style="color:gold;">📱 Scan & Visit Our Store</h2>
-<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://shorturl.at/meQIj" 
-style="border:6px solid gold;border-radius:20px;background:white;padding:5px;">
-<p style="font-size:20px;margin-top:15px;">Visit Now: <b style="color:gold;">https://shorturl.at/meQIj</b></p>
-<p style="color:#aaa;">Fast Delivery • Original Products • 1 Year Warranty</p>
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://shorturl.at/meQIj" style="border:6px solid gold;border-radius:20px;background:white;padding:5px;">
+<p style="font-size:20px;margin-top:15px;">https://shorturl.at/meQIj</p>
 </div>
-
-<footer>© 2026 TANVEER STORE - All Rights Reserved</footer>
 
 <script>
-let defaultProducts=[
+// FIXED CODE - No more error
+let defaults=[
 {name:"Golden Luxury Watch",price:5500,img:"https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=500"},
 {name:"Black Smart Watch",price:3500,img:"https://images.unsplash.com/photo-1579586337278-3befd40fd17a?w=500"},
 {name:"Silver Chain Watch",price:4000,img:"https://images.unsplash.com/photo-1548169874-53e85f753f1e?w=500"}
 ];
-let products=JSON.parse(localStorage.getItem("tanveer_products")) || JSON.stringify(defaultProducts);
+let prods = defaults;
+try{
+  let saved = localStorage.getItem("tanveer_products");
+  if(saved){ let parsed = JSON.parse(saved); if(Array.isArray(parsed) && parsed.length>0){ prods = parsed; } }
+}catch(e){ prods = defaults; }
 
-function showProducts(){
-let list=document.getElementById("productList");
-list.innerHTML="";
-products.forEach((p,i)=>{
-let msg=`Hello Tanveer Store, I want to order: ${p.name} Price: Rs.${p.price} Link: https://shorturl.at/meQIj`;
-let waLink=`https://wa.me/923001234567?text=${encodeURIComponent(msg)}`;
-list.innerHTML+=`
-<div class="card">
-<img src="${p.img}">
-<h3>${p.name}</h3>
-<div class="price">Rs. ${p.price}</div>
-<a href="${waLink}" target="_blank"><button class="btn">Order on WhatsApp</button></a>
-</div>`;
-});
+function show(){
+  let h="";
+  prods.forEach(p=>{
+    let msg=`Hello Tanveer Store, I want ${p.name} Rs.${p.price}`;
+    let wa=`https://wa.me/923001234567?text=${encodeURIComponent(msg)}`;
+    h+=`<div class="card"><img src="${p.img}" onerror="this.src='https://via.placeholder.com/300x200?text=Watch'"><h3 style="color:gold">${p.name}</h3><div class="price">Rs.${p.price}</div><a href="${wa}" target="_blank"><button class="btn">Order on WhatsApp</button></a></div>`;
+  });
+  document.getElementById("list").innerHTML=h;
 }
-function addProduct(){
-let pass=document.getElementById("pPass").value;
-if(pass!=="tanveer123"){alert("Wrong Password!");return;}
-let name=document.getElementById("pName").value;
-let price=document.getElementById("pPrice").value;
-let img=document.getElementById("pImg").value;
-if(!name||!price){alert("Name & Price likho");return;}
-if(!img) img="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=500";
-products.push({name,price,img});
-localStorage.setItem("tanveer_products",JSON.stringify(products));
-showProducts();
-alert("Product Added Successfully!");
-document.getElementById("pName").value="";document.getElementById("pPrice").value="";document.getElementById("pImg").value="";
+function addP(){
+  if(document.getElementById("ps").value!=="tanveer123"){alert("Wrong Password");return;}
+  let n=document.getElementById("n").value, pr=document.getElementById("pr").value, im=document.getElementById("im").value||"https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=500";
+  if(!n||!pr){alert("Name Price likho");return;}
+  prods.push({name:n,price:pr,img:im});
+  localStorage.setItem("tanveer_products",JSON.stringify(prods));
+  show(); alert("Product Added!");
 }
-showProducts();
+show();
 </script>
 </body>
 </html>
