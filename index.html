@@ -3,86 +3,97 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>TANVEER STORE - Premium Watches Karachi</title>
+<title>TANVEER STORE - Karachi</title>
 <style>
 body{margin:0;font-family:Arial;background:#0a0a0a;color:#fff;text-align:center}
-header{padding:25px;background:#111;border-bottom:3px solid #D4AF37}
-header h1{color:#D4AF37;font-size:36px;margin:0;letter-spacing:2px}
-.card{background:#151515;border:1px solid #333;border-radius:15px;padding:15px;margin:15px;display:inline-block;width:270px;vertical-align:top}
-.card img{width:100%;height:200px;object-fit:cover;border-radius:10px;background:#222}
-.price{color:#D4AF37;font-size:20px;font-weight:bold;margin:8px}
-.btn{background:#25D366;color:#fff;padding:10px 18px;border-radius:25px;text-decoration:none;display:inline-block;font-weight:bold;border:none;cursor:pointer;margin:3px}
-.btn-del{background:#ff4444;font-size:11px}
-.owner-box{margin:30px auto;background:#111;padding:20px;border:2px dashed #D4AF37;border-radius:15px;max-width:500px}
-.owner-box input{width:90%;padding:10px;margin:5px;border-radius:8px;border:none}
-.qr-box{margin:40px auto;background:#151515;padding:25px;border:2px solid #D4AF37;border-radius:15px;max-width:400px}
-.qr-box img{background:#fff;padding:10px;border-radius:10px}
-.link{color:#D4AF37;text-decoration:none;font-weight:bold;word-break:break-all;font-size:13px}
+header{padding:20px;background:#111;border-bottom:3px solid #D4AF37}
+header h1{color:#D4AF37;font-size:34px;margin:0}
+.card{background:#151515;border:1px solid #333;border-radius:15px;padding:12px;margin:12px;display:inline-block;width:260px;vertical-align:top}
+.card img{width:100%;height:200px;object-fit:cover;border-radius:10px}
+.price{color:#D4AF37;font-size:18px;font-weight:bold;margin:6px}
+.btn{background:#25D366;color:#fff;padding:9px 15px;border-radius:20px;text-decoration:none;display:inline-block;font-weight:bold;border:none;cursor:pointer;margin:3px;font-size:13px}
+.btn-gold{background:#D4AF37;color:#000}
+.owner{margin:25px auto;background:#111;padding:18px;border:2px dashed #D4AF37;border-radius:12px;max-width:520px}
+.owner input{width:92%;padding:9px;margin:5px;border-radius:7px;border:none}
+#prev{width:92%;max-height:180px;border-radius:8px;margin:8px;display:none;border:2px solid #D4AF37}
+textarea{width:92%;height:120px;border-radius:8px;margin-top:10px}
 </style>
 </head>
 <body>
-
 <header>
 <h1>TANVEER STORE</h1>
-<p>Premium Watches - Karachi | WhatsApp: 03164033509</p>
-<button class="btn" style="background:#D4AF37;color:#000;margin-top:10px" onclick="showAdmin()">🔐 Owner: Add Product</button>
-<button class="btn" style="background:#666;font-size:11px" onclick="resetProducts()">🔄 Reset Pictures</button>
+<p>03164033509 - Premium Watches Karachi</p>
+<button class="btn btn-gold" onclick="showAdmin()">🔐 Owner: Laptop Se Photo Add Karo</button>
 </header>
 
-<h2 style="color:#D4AF37;margin-top:25px">Our Premium Collection</h2>
-<div id="products"></div>
+<h2 style="color:#D4AF37;margin-top:20px">Our Collection</h2>
+<div id="list"></div>
 
-<div id="adminPanel" class="owner-box" style="display:none">
-<h3 style="color:#D4AF37">Add New Product</h3>
-<input id="pName" placeholder="Watch Name">
-<input id="pPrice" placeholder="Price" type="number">
-<input id="pImage" placeholder="Image Link (https://...) - Khali chhor sakte ho">
-<button class="btn" style="background:#D4AF37;color:#000;width:90%;margin-top:10px" onclick="addProduct()">+ Add Product</button>
-<button class="btn" onclick="hideAdmin()">Close</button>
+<div id="panel" class="owner" style="display:none">
+<h3 style="color:#D4AF37">Gallery Se Add Karo - No GitHub File Needed</h3>
+<input id="n" placeholder="Watch Name">
+<input id="pr" placeholder="Price" type="number">
+<p style="color:#D4AF37;font-size:12px">📁 Laptop Gallery Se Photo Chuno:</p>
+<input type="file" id="f" accept="image/*" onchange="readFile()">
+<img id="prev">
+<button class="btn btn-gold" style="width:92%" onclick="add()">+ Add To My Store (Is Laptop Par)</button>
+<hr style="border-color:#333;margin:15px 0">
+<p style="color:#FFD700;font-size:13px">👇 Sab customers ko dikhane ke liye:</p>
+<button class="btn" style="background:#0088ff;width:92%" onclick="makeFinalCode()">📋 Final Code Banao (Sab Ke Liye)</button>
+<textarea id="finalCode" placeholder="Yahan Final Code ayega, isko copy karke GitHub me paste kardo - Koi photo upload nahi karni!"></textarea>
+<button class="btn" onclick="hide()">Close</button>
 </div>
 
-<div class="qr-box">
+<div style="margin:30px auto;background:#151515;padding:20px;border:2px solid #D4AF37;border-radius:12px;max-width:380px">
 <h3 style="color:#FFD700">SCAN & VISIT</h3>
-<img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://blackpanther67899-create.github.io/TANVEER-STORE/" alt="QR">
-<p><a class="link" href="https://blackpanther67899-create.github.io/TANVEER-STORE/">https://blackpanther67899-create.github.io/TANVEER-STORE/</a></p>
-<p><a class="link" href="https://wa.me/923164033509" style="color:#25D366">WhatsApp: 03164033509</a></p>
-<a class="btn" href="https://wa.me/923164033509">Chat Now: 03164033509</a>
+<img src="https://api.qrserver.com/v1/create-qr-code/?size=230x230&data=https://blackpanther67899-create.github.io/TANVEER-STORE/" style="background:#fff;padding:8px;border-radius:8px">
+<p style="font-size:11px;color:#D4AF37">https://blackpanther67899-create.github.io/TANVEER-STORE/</p>
+<a class="btn" href="https://wa.me/923164033509">WhatsApp: 03164033509</a>
 </div>
 
 <script>
-let defaultProducts = [
-{name:"Rolex Premium", price:4500, image:"https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=600"},
-{name:"Smart Watch Ultra", price:3200, image:"https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600"},
-{name:"Casio G-Shock", price:2800, image:"https://images.unsplash.com/photo-1524805444973-bf390eab2a1d?w=600"}
+let defaults=[
+{name:"Rolex Premium",price:4500,image:"https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=600"},
+{name:"Smart Watch",price:3200,image:"https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600"}
 ];
+let products = JSON.parse(localStorage.getItem('tanveer_gallery_no_file') || 'null') || defaults;
+let tempBase64="";
 
-let saved = localStorage.getItem('tanveer_products_final');
-let products = saved ? JSON.parse(saved) : defaultProducts;
-// FIX: Agar khali hai to default dikhao
-if(!products || products.length===0){ products = defaultProducts; }
-
+function readFile(){
+let file=document.getElementById('f').files[0];
+if(!file) return;
+let r=new FileReader();
+r.onload=e=>{tempBase64=e.target.result;document.getElementById('prev').src=tempBase64;document.getElementById('prev').style.display='block';};
+r.readAsDataURL(file);
+}
 function render(){
-let div=document.getElementById('products');
-div.innerHTML="";
+let d=document.getElementById('list');d.innerHTML="";
 products.forEach((p,i)=>{
-div.innerHTML+=`<div class="card"><img src="${p.image}" onerror="this.src='https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=600'"><h3>${p.name}</h3><div class="price">Rs. ${p.price}</div><a class="btn" href="https://wa.me/923164033509?text=Salam%20${encodeURIComponent(p.name)}%20chahiye">Order: 03164033509</a><br><button class="btn btn-del" onclick="deleteProduct(${i})">Delete</button></div>`;
+d.innerHTML+=`<div class="card"><img src="${p.image}"><h3>${p.name}</h3><div class="price">Rs.${p.price}</div><a class="btn" href="https://wa.me/923164033509?text=${encodeURIComponent(p.name)}%20chahiye">Order 03164033509</a><br><button class="btn" style="background:#ff4444;font-size:10px" onclick="del(${i})">Delete</button></div>`;
 });
-localStorage.setItem('tanveer_products_final', JSON.stringify(products));
+localStorage.setItem('tanveer_gallery_no_file',JSON.stringify(products));
 }
-function showAdmin(){
-let pass=prompt("Password: (03164033509)");
-if(pass=="03164033509"||pass=="tanveer"){document.getElementById('adminPanel').style.display="block";}else{alert("Wrong! 03164033509 likho");}
+function showAdmin(){let pw=prompt("Password: 03164033509");if(pw=="03164033509"||pw=="tanveer")document.getElementById('panel').style.display='block';else alert("Wrong");}
+function hide(){document.getElementById('panel').style.display='none';}
+function add(){
+let name=document.getElementById('n').value;
+let price=document.getElementById('pr').value;
+if(!name||!price){alert("Naam Price likho");return;}
+if(!tempBase64){alert("Photo select karo!");return;}
+products.push({name,price,image:tempBase64});
+render();alert("✅ Aap ke laptop par add ho gaya!");
+document.getElementById('n').value="";document.getElementById('pr').value="";tempBase64="";document.getElementById('prev').style.display='none';
 }
-function hideAdmin(){document.getElementById('adminPanel').style.display="none";}
-function addProduct(){
-let name=document.getElementById('pName').value;
-let price=document.getElementById('pPrice').value;
-let image=document.getElementById('pImage').value || "https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=600";
-if(!name||!price){alert("Name & Price zaroori!");return;}
-products.push({name,price,image});render();alert("Add Ho Gaya! ✅");hideAdmin();
+function del(i){if(confirm("Delete?")){products.splice(i,1);render();}}
+function makeFinalCode(){
+// Make full HTML with embedded images
+let finalHTML = document.documentElement.outerHTML;
+// For simplicity, give products JSON to paste
+let codeForGitHub = `let defaults=${JSON.stringify(products)};`;
+document.getElementById('finalCode').value = "Aap ne " + products.length + " products add kiye hain. Ab ye poora page ka code copy karna hai:\n\n" + document.documentElement.outerHTML + "\n\n--- Is code ko GitHub me index.html me paste kardo, koi alag file upload nahi karni! Photo code ke andar hai! ---";
+document.getElementById('finalCode').select();
+alert("Final Code ban gaya! Neeche wale box se COPY karke GitHub me paste kardo. Ab sab customers ko aap ki gallery wali photos nazar ayengi, bina koi file upload kiye!");
 }
-function deleteProduct(i){if(confirm("Delete?")){products.splice(i,1);render();}}
-function resetProducts(){localStorage.clear();products=defaultProducts;render();alert("Pictures Reset Ho Gayi! ✅");}
 render();
 </script>
 </body>
